@@ -10,6 +10,7 @@ class Menu:
         self.data = data
 
     def main_menu(self):
+        os.system('clear')
         for i in range(0, len(self.data)):
             print("{}: {}".format(i+1, self.data[i][0]))
 

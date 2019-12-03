@@ -15,30 +15,15 @@ class Database:
     def insert_countries(self):
         data = s.country_data()
         # insert data on countries from web scraping class. todo make country class
-        for i in range(1, len(data)):
+        for i in range(0, len(data)):
             print(data[i])
             id = i
-            country = data[i]['Country']
-            reactors = int(data[i]['Reactors'] + data[i]['Reactors.1'])
-            # bad way of santizing data. make more like reactor
-            if data[i]['CapacityNet-total (MWe)']:
-                capacity_total = float(data[i]['CapacityNet-total (MWe)']) #strip and make only numbers
-            else:
-                capacity_total = None
-            if data[i]['Generatedelectricity (GWh)']:
-                generated_electricity = float(data[i]['Generatedelectricity (GWh)'])
-            else:
-                generated_electricity = None
-            if data[i]['Share of total electricity use']:
-                percent_use = float(data[i]['Share of total electricity use'].replace("%", ""))
-            else:
-                percent_use = None
-            if data[i]['country_code']:
-                country_code = data[i]['country_code'].split("/")
-                country_code = country_code[0]
-            else:
-                country_code = 'Unknown'
-
+            country = data[i].getCountry()
+            reactors = data[i].getReactors()
+            capacity_total = data[i].getCapacityTotal()
+            generated_electricity = data[i].getGenerated()
+            percent_use = data[i].getPercentUse()
+            country_code = data[i].getCountryCode()
             self.cursor.execute(
                 '''INSERT INTO countries(id,'country',reactors,capacity_total,generated_electricity,percent_use,country_code)
                  values({}, '{}', '{}', '{}', '{}', '{}', '{}');'''.format(id, country, reactors, capacity_total,
@@ -60,8 +45,8 @@ class Database:
             return False
 
     def country_selec(self, selec):
-        # pull country data based on id
-        choice = self.c.execute('''SELECT * from countries where id = {}'''.format(selec)).fetchall()
+        choice = self.c.execute('''SELECT * from countries where id = {};'''.format(int(selec)-1)).fetchall()
+        print(choice)
         return choice
 
     def get_country_codes(self):
