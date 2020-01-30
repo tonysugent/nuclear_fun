@@ -51,14 +51,15 @@ class Database:
             return False
 
     def country_selec(self, selec):
-        choice = self.c.execute('''SELECT * from countries where id = {};'''.format(int(selec)-1)).fetchall()
+        choice = self.cursor.execute('''SELECT * from countries where id = {};'''.format(int(selec)-1))
+        choice = self.cursor.fetchall()
         print(choice)
         return choice
 
     def get_country_codes(self):
         #grab country code and id from country table
         self.cursor.execute('''SELECT country_code,id from countries''')
-        codes= self.cursor.fetchall()
+        codes = self.cursor.fetchall()
         return codes
 
     def insert_reactors(self):
@@ -77,6 +78,9 @@ class Database:
 
     def get_reactors_country(self, country):
         # get reactors based on country
-        countryId = self.cursor.execute('''select id from countries where country like "{}"'''.format(country)).fetchone()
-        reactors = self.cursor.execute('''select * from reactors where id = {}'''.format(countryId[0])).fetchall()
+        self.cursor.execute('''select id from countries where country ilike '{}' '''.format(country))
+        countryId = self.cursor.fetchone()
+        self.cursor.execute('''select * from reactors where id = {}'''.format(countryId[0]))
+        reactors = self.cursor.fetchall()
+
         return reactors
