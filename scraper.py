@@ -45,13 +45,12 @@ class Scraper:
         return countries
 
     def get_reactors(self):
-        db_file = "nuke.db"
-        db = model.Database(db_file)
+        db = model.Database()
         con = db.get_country_codes()
         dict = {}
         reactors = []
         for i in range(0, len(con)):
-            if con[i][0] != 'Null':
+            if con[i][0] is not None:
                 url = 'https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=' + con[i][0].replace(" ",
                                                                                                                     "")
                 r = requests.get(url)
@@ -62,7 +61,7 @@ class Scraper:
                 dict[con[i][0].replace(" ", "")] = jsondata
         # manipulate json data and add country id to the reactors from the countries table
         for i in range(0, len(con)):
-            if con[i][0] != 'Null':
+            if con[i][0] is not None:
                 for j in range(0, len(dict[con[i][0].replace(" ", "")])):
                     dict[con[i][0].replace(" ", "")][str(j)]['ID'] = con[i][1]
                     name = dict[con[i][0].replace(" ", "")][str(j)]['Name']

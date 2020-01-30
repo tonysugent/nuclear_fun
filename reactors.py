@@ -12,6 +12,8 @@ class Reactor():
     def getName(self):
         if self.name is None:
             self.name = 'Null'
+        else:
+            self.name = self.name.replace("'", "")
         return self.name
 
     def getType(self):
@@ -27,6 +29,8 @@ class Reactor():
     def getLocation(self):
         if self.location is None:
             self.location = 'Null'
+        else:
+            self.location = self.location.replace("'","")
         return self.location
 
     def getRup(self):

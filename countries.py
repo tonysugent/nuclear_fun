@@ -25,7 +25,7 @@ class Country:
     def getGenerated(self):
         if self.generated_electricity is None:
             return 'Null'
-        return self.generated_electricity
+        return self.generated_electricity.split(" ")[0].replace(",", "")
 
     def getPercentUse(self):
         if self.percent_use is None:
@@ -35,6 +35,8 @@ class Country:
     def getCountryCode(self):
         if self.country_code is None:
             return 'Null'
+        else:
+             self.country_code = "'" + self.country_code +"'"
         return self.country_code
 
 

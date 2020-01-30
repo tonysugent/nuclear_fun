@@ -2,7 +2,15 @@ import model
 import menu
 
 db_file = "nuke.db"
-db = model.Database(db_file)
+
+params = {
+  'dbname': 'nuke',
+  'user': 'tony',
+  'password': 'rOflstomp11!',
+  'host': '18.219.19.27',
+  'port': 5432
+}
+db = model.Database()
 data = db.load_countries()
 disp = menu.Menu(data)
 

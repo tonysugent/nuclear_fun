@@ -1,7 +1,7 @@
 import model
 import os
 db_file = "nuke.db"
-db = model.Database(db_file)
+db = model.Database()
 
 #class to make menu
 
