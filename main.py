@@ -32,9 +32,9 @@ def main():
             breaker = 1
 
 def startup():
-    if db.table_check('countries') is False:
+    if db.table_check('nuke_countries') is False:
         db.insert_countries()
-    if db.table_check('reactors') is False:
+    if db.table_check('nuke_reactors') is False:
         db.insert_reactors()
 
 
