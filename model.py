@@ -78,7 +78,7 @@ class Database:
 
     def get_reactors_country(self, country):
         # get reactors based on country
-        self.cursor.execute('''select id from countries where nuke_country ilike '{}' '''.format(country))
+        self.cursor.execute('''select id from nuke_countries where country ilike '{}' '''.format(country))
         countryId = self.cursor.fetchone()
         self.cursor.execute('''select * from nuke_reactors where id = {}'''.format(countryId[0]))
         reactors = self.cursor.fetchall()
