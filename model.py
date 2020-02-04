@@ -25,7 +25,7 @@ class Database:
             percent_use = data[i].getPercentUse()
             country_code = data[i].getCountryCode()
             print("""INSERT INTO nuke_countries(id,country,reactors,capacity_total,generated_electricity,percent_use,country_code)
-                 values({}, '{}', '{}', {}, {}, {}, {});""".format(id, country, reactors, capacity_total,
+                 values({}, '{}', '{}', {}, {}, {https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=AR}, {});""".format(id, country, reactors, capacity_total,
                                                                    generated_electricity, percent_use, country_code))
             self.cursor.execute(
                 """INSERT INTO nuke_countries(id,country,reactors,capacity_total,generated_electricity,percent_use,country_code)
@@ -68,7 +68,7 @@ class Database:
         data = s.get_reactors()
 
         for i in range(0, len(data)):
-            self.cursor.execute('''INSERT INTO nuke_reactors(id,name,type,status,city,rup,gec,fgc) values({},'{}','{}',
+            self.cursor.execute('''INSERT INTO nuke_reactors(country_id,name,type,status,city,rup,gec,fgc) values({},'{}','{}',
             '{}','{}',{},{},{})'''.format(data[i].getcountryCode(), data[i].getName(), data[i].getType(), data[i].getStatus(),
                                   data[i].getLocation(), data[i].getRup(), data[i].getGec(), data[i].getFgc()))
             self.c.commit()
@@ -82,6 +82,6 @@ class Database:
         print(country)
         self.cursor.execute('''select id from nuke_countries where country ilike '{}' '''.format(country))
         countryId = self.cursor.fetchone()
-        self.cursor.execute('''select id,name,type,status,city,rup,gec,fgc  from nuke_reactors where id = {}'''.format(countryId[0]))
+        self.cursor.execute('''select id,name,type,status,city,rup,gec,fgc from nuke_reactors where id = {}'''.format(countryId[0]))
         reactors = self.cursor.fetchall()
         return reactors

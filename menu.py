@@ -24,6 +24,7 @@ class Menu:
     def reactors(self, spec):
         os.system('clear')
         reactors = db.get_reactors_country(spec)
+        print(reactors)
         for i in range(0, len(reactors)):
             name = reactors[i][1]
             type = reactors[i][2]
