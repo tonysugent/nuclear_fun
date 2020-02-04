@@ -51,7 +51,8 @@ class Database:
             return False
 
     def country_selec(self, selec):
-        choice = self.cursor.execute('''SELECT * from nuke_countries where id = {};'''.format(int(selec)-1))
+        self.cursor.execute('''SELECT id,country,reactors,capacity_total,generated_electricity,percent_use,
+        country_code from nuke_countries where id = {};'''.format(int(selec)-1))
         choice = self.cursor.fetchall()
         print(choice)
         return choice
@@ -74,13 +75,13 @@ class Database:
 
     def get_reactors(self):
         # get all nuclear reactors.. probably going to use this for stats later
-        self.cursor.execute('''select * from nuke_reactors''')
+        self.cursor.execute('''select id,name,type,status,city,rup,gec,fgc from nuke_reactors''')
 
     def get_reactors_country(self, country):
         # get reactors based on country
+        print(country)
         self.cursor.execute('''select id from nuke_countries where country ilike '{}' '''.format(country))
         countryId = self.cursor.fetchone()
-        self.cursor.execute('''select * from nuke_reactors where id = {}'''.format(countryId[0]))
+        self.cursor.execute('''select id,name,type,status,city,rup,gec,fgc  from nuke_reactors where id = {}'''.format(countryId[0]))
         reactors = self.cursor.fetchall()
-
         return reactors
