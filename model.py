@@ -24,13 +24,10 @@ class Database:
             generated_electricity = data[i].getGenerated()
             percent_use = data[i].getPercentUse()
             country_code = data[i].getCountryCode()
-            print("""INSERT INTO nuke_countries(id,country,reactors,capacity_total,generated_electricity,percent_use,country_code)
-                 values({}, '{}', '{}', {}, {}, {https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=AR}, {});""".format(id, country, reactors, capacity_total,
-                                                                   generated_electricity, percent_use, country_code))
             self.cursor.execute(
                 """INSERT INTO nuke_countries(id,country,reactors,capacity_total,generated_electricity,percent_use,country_code)
-                 values({}, '{}', '{}', {}, {}, {}, {});""".format(id, country, reactors, capacity_total,
-                                                                   generated_electricity, percent_use, country_code))
+                 values({}, '{}', '{}', {}, {}, {}, {});""".format(country_code, country, reactors, capacity_total,
+                                                                   generated_electricity, percent_use))
             self.c.commit()
 
     def load_countries(self):
