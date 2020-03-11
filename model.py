@@ -9,12 +9,12 @@ s = Scraper()
 class Database:
     def __init__(self):
 
-        self.c = psycopg2.connect(database='nuke',user='postgres',password='rOflstomp11!', host='18.219.19.27',port=5432)
+        self.c = psycopg2.connect(database='nuke',user='postgres',password='rOflstomp11!', host='18.216.34.118',port=5432)
         self.cursor = self.c.cursor()
 
     def insert_countries(self):
         data = s.country_data()
-        # insert data on countries from web scraping class. todo make country class
+        # insert data on countries from web scraping class.
         for i in range(0, len(data)):
             print(data[i])
             id = i
@@ -24,10 +24,11 @@ class Database:
             generated_electricity = data[i].getGenerated()
             percent_use = data[i].getPercentUse()
             country_code = data[i].getCountryCode()
+            print(country_code)
             self.cursor.execute(
                 """INSERT INTO nuke_countries(id,country,reactors,capacity_total,generated_electricity,percent_use,country_code)
-                 values({}, '{}', '{}', {}, {}, {}, {});""".format(country_code, country, reactors, capacity_total,
-                                                                   generated_electricity, percent_use))
+                 values({}, '{}', '{}', {}, {}, {}, {});""".format(id, country, reactors, capacity_total,
+                                                                   generated_electricity, percent_use,country_code))
             self.c.commit()
 
     def load_countries(self):
@@ -65,14 +66,17 @@ class Database:
         data = s.get_reactors()
 
         for i in range(0, len(data)):
-            self.cursor.execute('''INSERT INTO nuke_reactors(country_id,name,type,status,city,rup,gec,fgc) values({},'{}','{}',
-            '{}','{}',{},{},{})'''.format(data[i].getcountryCode(), data[i].getName(), data[i].getType(), data[i].getStatus(),
-                                  data[i].getLocation(), data[i].getRup(), data[i].getGec(), data[i].getFgc()))
+            self.cursor.execute('''INSERT INTO nuke_reactors(country_id,name,type,status,city,rup,gec,fgc,lat,long) values({},'{}','{}',
+            '{}','{}',{},{},{},{},{})'''.format(data[i].getcountryCode(), data[i].getName(), data[i].getType(), data[i].getStatus(),
+                                  data[i].getLocation(), data[i].getRup(), data[i].getGec(), data[i].getFgc(),
+                                                data[i].getLat(), data[i].getLong()))
             self.c.commit()
 
     def get_reactors(self):
         # get all nuclear reactors.. probably going to use this for stats later
         self.cursor.execute('''select id,name,type,status,city,rup,gec,fgc from nuke_reactors''')
+        list_reactors = self.cursor.fetchall()
+        return list_reactors
 
     def get_reactors_country(self, country):
         # get reactors based on country

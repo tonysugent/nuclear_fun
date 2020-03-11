@@ -7,7 +7,7 @@ params = {
   'dbname': 'nuke',
   'user': 'tony',
   'password': 'rOflstomp11!',
-  'host': '18.219.19.27',
+  'host': '18.216.34.118',
   'port': 5432
 }
 db = model.Database()

@@ -1,5 +1,5 @@
 class Reactor():
-    def __init__(self, name, reactorType, status, location, rup, gec, fgc, countryCode):
+    def __init__(self, name, reactorType, status, location, rup, gec, fgc, countryCode, lat, long):
         self.name = name
         self.reactorType = reactorType
         self.status = status
@@ -8,7 +8,8 @@ class Reactor():
         self.gec = gec
         self.fgc = fgc
         self.countryCode = countryCode
-
+        self.lat = lat
+        self.long = long
     def getName(self):
         if self.name is None:
             self.name = 'Null'
@@ -50,3 +51,13 @@ class Reactor():
 
     def getcountryCode(self):
         return self.countryCode
+
+    def getLat(self):
+        if self.lat is None:
+            self.lat = 'Null'
+        return self.lat
+
+    def getLong(self):
+        if self.long is None:
+            self.long = 'Null'
+        return self.long
