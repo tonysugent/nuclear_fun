@@ -9,7 +9,7 @@ s = Scraper()
 class Database:
     def __init__(self):
 
-        self.c = psycopg2.connect(database='app',user='tony',password='lolpwnt1', host='18.216.34.118',port=5432)
+        self.c = psycopg2.connect(database='app',user='tony',password='lolpwnt1', host='127.0.0.1',port=5432)
         self.cursor = self.c.cursor()
 
     def insert_countries(self):
