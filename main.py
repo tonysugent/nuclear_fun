@@ -3,13 +3,6 @@ import menu
 
 db_file = "nuke.db"
 
-params = {
-  'dbname': 'nuke',
-  'user': 'tony',
-  'password': 'rOflstomp11!',
-  'host': '18.216.34.118',
-  'port': 5432
-}
 db = model.Database()
 data = db.load_countries()
 disp = menu.Menu(data)
@@ -32,9 +25,9 @@ def main():
             breaker = 1
 
 def startup():
-    if db.table_check('nuke_countries') is False:
+    if db.table_check('app_countries') is False:
         db.insert_countries()
-    if db.table_check('nuke_reactors') is False:
+    if db.table_check('app_reactors') is False:
         db.insert_reactors()
 
 
